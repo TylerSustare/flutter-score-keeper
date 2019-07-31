@@ -11,25 +11,29 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final List<String> _playerList = new List<String>();
+  final List<Player> _playerList = new List<Player>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Simple Score Keeper',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Score Keeper'),
-          backgroundColor: Colors.pink,
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: <Widget>[
-                MyCustomForm(onAddPlayer: this.onAddPlayer, playerList: _playerList),
-                PlayerList(name: _playerList, onDeletePlayer: this.onDeletePlayer),
-              ],
+      home: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Score Keeper'),
+            backgroundColor: Colors.pink,
+          ),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView(
+                children: <Widget>[
+                  MyCustomForm(
+                      onAddPlayer: this.onAddPlayer, playerList: _playerList),
+                  PlayerList(
+                      name: _playerList, onDeletePlayer: this.onDeletePlayer),
+                ],
+              ),
             ),
           ),
         ),
@@ -37,7 +41,8 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void onAddPlayer({String newPlayer}) {
+  void onAddPlayer({String name}) {
+    Player newPlayer = new Player(name: name);
     this._playerList.add(newPlayer);
     setState(() => [...this._playerList]);
     /* same as ☝️
@@ -47,10 +52,11 @@ class _MyAppState extends State<MyApp> {
     */
   }
 
-  void onDeletePlayer({String playerName}){
+  void onDeletePlayer({String playerName}) {
     this._playerList.remove(playerName);
     setState(() {
-      _playerList: [...this._playerList];
+      _playerList:
+      [...this._playerList];
     });
   }
 }

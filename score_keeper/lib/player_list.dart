@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+import 'package:score_keeper/player.dart';
+
 class PlayerList extends StatefulWidget {
   PlayerList({@required this.name, @required this.onDeletePlayer});
-  final List<String> name;
+  final List<Player> name;
   final Function onDeletePlayer;
 
   @override
@@ -13,7 +15,7 @@ class PlayerList extends StatefulWidget {
 
 class PlayerListState extends State<PlayerList> {
   PlayerListState({@required this.name, @required this.onDeletePlayer});
-  final List<String> name;
+  final List<Player> name;
   final Function onDeletePlayer;
 
   @override
@@ -21,14 +23,14 @@ class PlayerListState extends State<PlayerList> {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(8.0),
+      // padding: const EdgeInsets.all(8.0),
       itemCount: name.length,
       itemBuilder: (BuildContext context, int index) {
         return Card(
           child: ListTile(
             // trailing: Icon(Icons.edit),
             title: Text(
-              '${name[index]}',
+              '${name[index].name}',
               style: TextStyle(
                 color: Colors.red,
               ),

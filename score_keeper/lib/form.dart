@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:score_keeper/player.dart';
 
 // Create a Form widget.
 class MyCustomForm extends StatefulWidget {
   MyCustomForm({@required this.onAddPlayer, @required this.playerList});
   final Function onAddPlayer;
-  final List<String> playerList;
+  final List<Player> playerList;
   @override
   MyCustomFormState createState() =>
       MyCustomFormState(onAddPlayer: onAddPlayer, playerList: playerList);
@@ -15,9 +16,8 @@ class MyCustomForm extends StatefulWidget {
 class MyCustomFormState extends State<MyCustomForm> {
   MyCustomFormState({@override this.onAddPlayer, @override this.playerList});
   final Function onAddPlayer;
-  final List<String> playerList;
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
+  final List<Player> playerList;
+  // Create a global key that uniquely identifies the Form widget and allows validation of the form.
   //
   // Note: This is a GlobalKey<FormState>, not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
@@ -53,28 +53,33 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, false if not
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Added "${myController.text}" to game...',
-                      ),
-                      duration: Duration(seconds: 2),
-                      backgroundColor: Colors.pinkAccent,
-                    ),
-                  );
-                  onAddPlayer(newPlayer: myController.text);
-                  myController.clear();
-                }
-              },
-              child: Text('Add'),
-            ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: RaisedButton(
+                  onPressed: () {
+                    // Validate returns true if the form is valid, false if not
+                    if (_formKey.currentState.validate()) {
+                      // If the form is valid, display a Snackbar.
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Added "${myController.text}" to game...',
+                          ),
+                          duration: Duration(seconds: 2),
+                          backgroundColor: Colors.pinkAccent,
+                        ),
+                      );
+                      onAddPlayer(name: myController.text);
+                      myController.clear();
+                    }
+                  },
+                  child: Text('Add Player to Game'),
+                ),
+              ),
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
           ),
         ],
       ),
