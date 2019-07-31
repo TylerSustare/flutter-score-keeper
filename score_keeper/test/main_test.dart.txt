@@ -1,0 +1,10 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:score_keeper/main.dart';
+
+void main() {
+  testWidgets('Hello World should show up', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+
+    expect(find.text('Hello World'), findsOneWidget);
+  });
+}
