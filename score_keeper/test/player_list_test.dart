@@ -5,15 +5,19 @@ import 'package:mockito/mockito.dart' as mockito;
 import 'package:score_keeper/player_list.dart';
 import 'package:score_keeper/player.dart';
 
+class Faker {
+  void del({String playerName}) => print('you_spoony_bard');
+}
+
+class MockDel extends mockito.Mock implements Faker {}
+
 void main() {
   List<Player> players = new List<Player>();
-  Function del;
+
   setUp() {
     players = <Player>[
       Player(name: 'p1'),
     ]; // apparently arrays are lists
-
-    del = () => print('spoony_bard');
   }
 
   tearDown() {
@@ -36,7 +40,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: PlayerList(
         name: players,
-        onDeletePlayer: del,
+        onDeletePlayer: new Faker().del,
       ),
     ));
     expect(find.byType(PlayerList), findsOneWidget);
@@ -47,16 +51,16 @@ void main() {
 
   testWidgets('Icon tap calls "onDeletePlayer"', (WidgetTester tester) async {
     setUp();
-    mockito.when(del());
+    final mock = MockDel();
     await tester.pumpWidget(MaterialApp(
       home: PlayerList(
         name: players,
-        onDeletePlayer: del,
+        onDeletePlayer: mock.del,
       ),
     ));
     final button = find.byKey(Key('p1'));
     await tester.tap(button);
-    expect(mockito.verify(del).callCount, 2);
+    mockito.verify(mock.del(playerName: 'p1')).called(1);
     tearDown();
   });
 }
