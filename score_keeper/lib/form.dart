@@ -47,8 +47,12 @@ class MyCustomFormState extends State<MyCustomForm> {
               if (value.isEmpty) {
                 return 'Player name can\'t be empty';
               }
-              if (this.playerList.contains(value)) {
-                return 'Can\'t have duplicate player name';
+              if (this.playerList.length > 0) {
+                final playerMap = Map.fromIterable(this.playerList,
+                    key: (player) => player.name, value: (player) => player);
+                if (playerMap[value] != null) {
+                  return 'Can\'t have duplicate player name';
+                }
               }
               return null;
             },

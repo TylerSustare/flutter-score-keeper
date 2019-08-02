@@ -40,7 +40,8 @@ class PlayerListState extends State<PlayerList> {
                 Icons.delete,
                 color: Colors.grey[700],
               ),
-              onPressed: () => onDeletePlayer(playerName: name[index]),
+              onPressed: () => onDeletePlayer(playerName: name[index].name),
+              key: Key('${name[index].name}')
             ),
           ),
         );

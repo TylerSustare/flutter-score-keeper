@@ -44,7 +44,8 @@ class _MyAppState extends State<MyApp> {
   void onAddPlayer({String name}) {
     Player newPlayer = new Player(name: name);
     this._playerList.add(newPlayer);
-    setState(() => [...this._playerList]);
+    setState(() => this._playerList);
+    // setState(() => [...this._playerList]);
     /* same as ☝️
     setState(() {
       _playerList: [...this._playerList];
@@ -53,10 +54,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   void onDeletePlayer({String playerName}) {
-    this._playerList.remove(playerName);
-    setState(() {
-      _playerList:
-      [...this._playerList];
-    });
+    int index = 0;
+    for (var i = 0; i < this._playerList.length; i++) {
+      if (this._playerList[i].name == playerName){
+        index = i;
+        break;
+      }
+    }
+    this._playerList.removeAt(index);
+    setState(() => this._playerList);
   }
 }
