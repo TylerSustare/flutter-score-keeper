@@ -20,7 +20,7 @@ void main() {
   });
   test('Player constructor with score, but no name', () {
     try {
-      Player p1 = new Player(score: 22);
+      new Player(score: 22);
     } catch (e) {
       expect(
           e.toString(), 'Exception: MUST_HAVE_A_NAME_TO_INITIALIZE_WITH_SCORE');

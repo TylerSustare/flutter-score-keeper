@@ -5,6 +5,7 @@ import 'package:score_keeper/player.dart';
 
 class PlayerList extends StatefulWidget {
   PlayerList({@required this.name, @required this.onDeletePlayer});
+
   final List<Player> name;
   final Function onDeletePlayer;
 
@@ -15,6 +16,7 @@ class PlayerList extends StatefulWidget {
 
 class PlayerListState extends State<PlayerList> {
   PlayerListState({@required this.name, @required this.onDeletePlayer});
+
   final List<Player> name;
   final Function onDeletePlayer;
 
@@ -26,21 +28,51 @@ class PlayerListState extends State<PlayerList> {
       // padding: const EdgeInsets.all(8.0),
       itemCount: name.length,
       itemBuilder: (BuildContext context, int index) {
-        return Card(
-          child: ListTile(
+        return new Card(
+          child: new ListTile(
             // trailing: Icon(Icons.edit),
             title: Text(
               '${name[index].name}',
-              style: TextStyle(
+              style: new TextStyle(
                 color: Colors.red,
               ),
             ),
-            leading: FlatButton(
-              child: Icon(
+            leading: new FlatButton(
+              child: new Icon(
                 Icons.delete,
                 color: Colors.grey[700],
               ),
-              onPressed: () => onDeletePlayer(playerName: name[index]),
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (_) => new AlertDialog(
+                    title: new Text('Delete "${name[index].name}" from game?'),
+                    content: new Text("This is my content"),
+                    actions: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          new FlatButton(
+                            onPressed: () {
+                              onDeletePlayer(playerName: name[index].name);
+                              Navigator.pop(context, 'success');
+                            },
+                            child: Text('Yes'),
+                            key: new Key('${name[index].name}-delete-confirm'),
+                          ),
+                          new FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context, 'abandoned');
+                            },
+                            child: Text('No'),
+                            key: new Key('${name[index].name}-delete-cancel'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+              key: new Key('${name[index].name}-delete'),
             ),
           ),
         );
