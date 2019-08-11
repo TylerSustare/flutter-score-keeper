@@ -49,7 +49,7 @@ void main() {
     tearDown();
   });
 
-  testWidgets('Icon tap calls "onDeletePlayer"', (WidgetTester tester) async {
+  testWidgets('Icon tap brings up confirm alert ', (WidgetTester tester) async {
     setUp();
     final mock = MockDel();
     await tester.pumpWidget(MaterialApp(
@@ -58,9 +58,49 @@ void main() {
         onDeletePlayer: mock.del,
       ),
     ));
-    final button = find.byKey(Key('p1'));
-    await tester.tap(button);
+    final deleteIcon = find.byKey(Key('p1-delete'));
+    await tester.tap(deleteIcon);
+    await tester.pump();
+    final alert = find.text('Delete "p1" from game?');
+    expect(alert,findsOneWidget);
+    tearDown();
+  });
+
+
+  testWidgets('Icon tap and confirm tap calls "onDeletePlayer"', (WidgetTester tester) async {
+    setUp();
+    final mock = MockDel();
+    await tester.pumpWidget(MaterialApp(
+      home: PlayerList(
+        name: players,
+        onDeletePlayer: mock.del,
+      ),
+    ));
+    final deleteIcon = find.byKey(Key('p1-delete'));
+    await tester.tap(deleteIcon);
+    await tester.pump();
+    final confirmDelete = find.byKey(Key('p1-delete-confirm'));
+    await tester.tap(confirmDelete);
     mockito.verify(mock.del(playerName: 'p1')).called(1);
     tearDown();
   });
+
+  testWidgets('Icon tap and cancel tap does not call "onDeletePlayer"', (WidgetTester tester) async {
+    setUp();
+    final mock = MockDel();
+    await tester.pumpWidget(MaterialApp(
+      home: PlayerList(
+        name: players,
+        onDeletePlayer: mock.del,
+      ),
+    ));
+    final deleteIcon = find.byKey(Key('p1-delete'));
+    await tester.tap(deleteIcon);
+    await tester.pump();
+    final confirmDelete = find.byKey(Key('p1-delete-cancel'));
+    await tester.tap(confirmDelete);
+    mockito.verifyNever(mock.del(playerName: 'p1'));
+    tearDown();
+  });
+
 }

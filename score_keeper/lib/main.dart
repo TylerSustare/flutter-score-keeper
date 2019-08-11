@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
               padding: const EdgeInsets.all(8.0),
               child: ListView(
                 children: <Widget>[
-                  MyCustomForm(
+                  PlayerForm(
                       onAddPlayer: this.onAddPlayer, playerList: _playerList),
                   PlayerList(
                       name: _playerList, onDeletePlayer: this.onDeletePlayer),
@@ -44,9 +44,9 @@ class _MyAppState extends State<MyApp> {
   void onAddPlayer({String name}) {
     Player newPlayer = new Player(name: name);
     this._playerList.add(newPlayer);
-    setState(() => this._playerList);
-    // setState(() => [...this._playerList]);
-    /* same as ☝️
+    setState(() => this._playerList); // call set state, telling flutter what piece of state changed
+    // setState(() => [...this._playerList]); // works
+    /* also works
     setState(() {
       _playerList: [...this._playerList];
     });
