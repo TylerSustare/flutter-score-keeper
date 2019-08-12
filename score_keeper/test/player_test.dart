@@ -3,16 +3,6 @@ import 'package:score_keeper/player.dart';
 import "package:test/test.dart";
 
 void main() {
-    test('fail test', () {
-    try {
-      new Player(name: 'stan', score: 22);
-    } catch (e) {
-      expect(
-          e.toString(), 'Exception: MUST_HAVE_A_NAME_TO_INITIALIZE_WITH_SCORE');
-      return;
-    }
-    expect('to not reach this line. Expected error case', true);
-  });
   test('Player default constructor', () {
     Player p1 = new Player();
     expect(p1.name, null);
