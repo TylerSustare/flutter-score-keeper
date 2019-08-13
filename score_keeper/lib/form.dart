@@ -73,16 +73,20 @@ class PlayerFormState extends State<PlayerForm> {
                       onPressed: () {
                         // Validate returns true if the form is valid, false if not
                         if (_formKey.currentState.validate()) {
-                          // If the form is valid, display a Snackbar.
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Added "${myController.text}" to game...',
+                          try {
+                            // If the form is valid, display a Snackbar.
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Added "${myController.text}" to game...',
+                                ),
+                                duration: Duration(seconds: 1),
+                                backgroundColor: Colors.pinkAccent,
                               ),
-                              duration: Duration(seconds: 1),
-                              backgroundColor: Colors.pinkAccent,
-                            ),
-                          );
+                            );
+                          } catch (e) {
+                            // log error
+                          }
                           onAddPlayer(name: myController.text);
                           myController.clear();
                         }
@@ -92,6 +96,7 @@ class PlayerFormState extends State<PlayerForm> {
                         color: Colors.white,
                       ),
                       color: Colors.blue,
+                      key: new Key('add-player-to-game'),
                     ),
                   ),
                 ],
