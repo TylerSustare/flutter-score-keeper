@@ -9,8 +9,7 @@ class GameList extends StatefulWidget {
   final List<Player> players;
 
   @override
-  GameListState createState() =>
-      GameListState(players: players);
+  GameListState createState() => GameListState(players: players);
 }
 
 class GameListState extends State<GameList> {
@@ -48,9 +47,7 @@ class GameListState extends State<GameList> {
                     color: Colors.grey[700],
                   ),
                   onPressed: () {
-                    for (var i = 0; i < 100; i++) {
-                      players[index].decrementScore();
-                    }
+                    players[index].decrementScore();
                     setState(() => players);
                   },
                   key: new Key(
