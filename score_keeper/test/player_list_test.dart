@@ -27,7 +27,7 @@ void main() {
   testWidgets('List is created with no players', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
       home: PlayerList(
-        name: new List<Player>(),
+        players: new List<Player>(),
         onDeletePlayer: () {},
       ),
     ));
@@ -39,7 +39,7 @@ void main() {
     setUp();
     await tester.pumpWidget(MaterialApp(
       home: PlayerList(
-        name: players,
+        players: players,
         onDeletePlayer: new Faker().del,
       ),
     ));
@@ -54,7 +54,7 @@ void main() {
     final mock = MockDel();
     await tester.pumpWidget(MaterialApp(
       home: PlayerList(
-        name: players,
+        players: players,
         onDeletePlayer: mock.del,
       ),
     ));
@@ -72,7 +72,7 @@ void main() {
     final mock = MockDel();
     await tester.pumpWidget(MaterialApp(
       home: PlayerList(
-        name: players,
+        players: players,
         onDeletePlayer: mock.del,
       ),
     ));
@@ -90,7 +90,7 @@ void main() {
     final mock = MockDel();
     await tester.pumpWidget(MaterialApp(
       home: PlayerList(
-        name: players,
+        players: players,
         onDeletePlayer: mock.del,
       ),
     ));

@@ -56,7 +56,8 @@ class PlayerFormState extends State<PlayerForm> {
                   }
                   if (this.playerList.length > 0) {
                     final playerMap = Map.fromIterable(this.playerList,
-                        key: (player) => player.name, value: (player) => player);
+                        key: (player) => player.name,
+                        value: (player) => player);
                     if (playerMap[value] != null) {
                       return 'Can\'t have duplicate player name';
                     }
@@ -78,7 +79,7 @@ class PlayerFormState extends State<PlayerForm> {
                               content: Text(
                                 'Added "${myController.text}" to game...',
                               ),
-                              duration: Duration(seconds: 2),
+                              duration: Duration(seconds: 1),
                               backgroundColor: Colors.pinkAccent,
                             ),
                           );
@@ -86,11 +87,15 @@ class PlayerFormState extends State<PlayerForm> {
                           myController.clear();
                         }
                       },
-                      child: Text('Add Player to Game'),
+                      child: Icon(
+                        Icons.person_add,
+                        color: Colors.white,
+                      ),
+                      color: Colors.blue,
                     ),
                   ),
                 ],
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
               ),
             ],
           ),
