@@ -42,8 +42,8 @@ class _MyAppState extends State<MyApp> {
   void onAddPlayer({String name}) {
     Player newPlayer = new Player(name: name);
     this._playerList.add(newPlayer);
-    setState(() => this
-        ._playerList); // call set state, telling flutter what piece of state changed
+    // call set state, telling flutter what piece of state changed
+    setState(() => this._playerList);
     // setState(() => [...this._playerList]); // works
     /* also works
     setState(() {
