@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:score_keeper/form.dart';
 import 'package:score_keeper/player_list.dart';
 import 'package:score_keeper/player.dart';
+import 'package:score_keeper/views/list.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,25 +18,22 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Simple Score Keeper',
-      home: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('Score Keeper'),
-            backgroundColor: Colors.pink,
-          ),
-          body: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                children: <Widget>[
-                  PlayerForm(
-                      onAddPlayer: this.onAddPlayer, playerList: _playerList),
-                  PlayerList(
-                      name: _playerList, onDeletePlayer: this.onDeletePlayer),
-                ],
-              ),
+      home: Scaffold(
+        appBar: AppBar(
+          leading: FlatButton(
+            child: Icon(
+              Icons.settings,
+              color: Colors.white,
             ),
+            onPressed: () {},
           ),
+          title: Text('Score Keeper - Players'),
+          backgroundColor: Colors.pink,
+        ),
+        body: PlayerListView(
+          playerList: _playerList,
+          onDeletePlayer: this.onDeletePlayer,
+          onAddPlayer: this.onAddPlayer,
         ),
       ),
     );
@@ -44,7 +42,8 @@ class _MyAppState extends State<MyApp> {
   void onAddPlayer({String name}) {
     Player newPlayer = new Player(name: name);
     this._playerList.add(newPlayer);
-    setState(() => this._playerList); // call set state, telling flutter what piece of state changed
+    setState(() => this
+        ._playerList); // call set state, telling flutter what piece of state changed
     // setState(() => [...this._playerList]); // works
     /* also works
     setState(() {
@@ -56,7 +55,7 @@ class _MyAppState extends State<MyApp> {
   void onDeletePlayer({String playerName}) {
     int index = 0;
     for (var i = 0; i < this._playerList.length; i++) {
-      if (this._playerList[i].name == playerName){
+      if (this._playerList[i].name == playerName) {
         index = i;
         break;
       }
