@@ -56,7 +56,7 @@ void main() {
     tearDown();
   });
 
-  testWidgets('Increment the players score is reflected on the app',
+  testWidgets('Decrementthe players score is reflected on the app',
       (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
@@ -68,6 +68,22 @@ void main() {
     await tester.pump();
     expect(find.text('-1'), findsOneWidget);
     expect(find.text('0'), findsNothing);
+    tearDown();
+  });
+
+  testWidgets('Increment one score does not impact other players',
+      (WidgetTester tester) async {
+    setUp();
+    players.add(Player(name: 'p2'));
+    await tester.pumpWidget(MaterialApp(
+      home: GameList(
+        players: players,
+      ),
+    ));
+    await tester.tap(find.byKey(Key('p1-increment-score')));
+    await tester.pump();
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('0'), findsOneWidget);
     tearDown();
   });
 }
