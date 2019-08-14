@@ -43,6 +43,7 @@ class PlayerListView extends StatelessWidget {
                           color: Colors.white,
                         ),
                         color: Colors.blue,
+                        key: new Key('keep-score'),
                       )
                     : Text('Please add a player to continue...'),
               ],

@@ -20,13 +20,13 @@ class _MyAppState extends State<MyApp> {
       title: 'Simple Score Keeper',
       home: Scaffold(
         appBar: AppBar(
-          leading: FlatButton(
+          /* leading: FlatButton(
             child: Icon(
               Icons.settings,
               color: Colors.white,
             ),
             onPressed: () {},
-          ),
+          ), */
           title: Text('Score Keeper - Players'),
           backgroundColor: Colors.pink,
         ),
