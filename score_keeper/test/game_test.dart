@@ -52,6 +52,7 @@ void main() {
     await tester.tap(find.byKey(Key('p1-increment-score')));
     await tester.pump();
     expect(find.text('1'), findsOneWidget);
+    expect(find.text('0'), findsNothing);
     tearDown();
   });
 
@@ -66,6 +67,7 @@ void main() {
     await tester.tap(find.byKey(Key('p1-decrement-score')));
     await tester.pump();
     expect(find.text('-1'), findsOneWidget);
+    expect(find.text('0'), findsNothing);
     tearDown();
   });
 }
