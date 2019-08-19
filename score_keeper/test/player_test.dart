@@ -53,5 +53,11 @@ void main() {
     p1.subtractScore(scoreToSubtract: 3);
     expect(p1.score, 17);
   });
+  test('resetScore method', () {
+    final Player p1 = new Player(name: 'Sally', score: 20);
+    expect(p1.score, 20);
+    p1.resetScore();
+    expect(p1.score, 0);
+  });
 
 }

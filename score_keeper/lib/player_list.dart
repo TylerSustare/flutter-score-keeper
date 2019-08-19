@@ -48,7 +48,7 @@ class PlayerListState extends State<PlayerList> {
                   builder: (_) => new AlertDialog(
                     title:
                         new Text('Delete "${players[index].name}" from game?'),
-                    content: new Text("This is my content"),
+                    content: new Text("This can't be undone"),
                     actions: <Widget>[
                       Row(
                         children: <Widget>[
