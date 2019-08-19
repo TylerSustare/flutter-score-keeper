@@ -1,4 +1,3 @@
-// Import the test package and Counter class
 import 'package:score_keeper/player.dart';
 import "package:test/test.dart";
 
