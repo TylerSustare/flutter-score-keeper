@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:score_keeper/form.dart';
-import 'package:score_keeper/player_list.dart';
 import 'package:score_keeper/player.dart';
 import 'package:score_keeper/views/list.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MainApp());
 
-class MyApp extends StatefulWidget {
+class MainApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _MainAppState createState() => _MainAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MainAppState extends State<MainApp> {
   final List<Player> _playerList = new List<Player>();
 
   @override
@@ -34,6 +32,7 @@ class _MyAppState extends State<MyApp> {
           playerList: _playerList,
           onDeletePlayer: this.onDeletePlayer,
           onAddPlayer: this.onAddPlayer,
+          onResetPlayerScores: this.onResetPlayerScores,
         ),
       ),
     );
@@ -61,6 +60,13 @@ class _MyAppState extends State<MyApp> {
       }
     }
     this._playerList.removeAt(index);
+    setState(() => this._playerList);
+  }
+
+  void onResetPlayerScores(){
+    for (var player in this._playerList) {
+      player.resetScore();
+    }
     setState(() => this._playerList);
   }
 }

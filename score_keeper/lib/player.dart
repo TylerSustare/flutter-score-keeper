@@ -14,4 +14,5 @@ class Player {
   void decrementScore() => this.score--;
   void addScore({double scoreToAdd}) => this.score += scoreToAdd;
   void subtractScore({double scoreToSubtract}) => this.score -= scoreToSubtract;
+  void resetScore() => this.score = 0;
 }

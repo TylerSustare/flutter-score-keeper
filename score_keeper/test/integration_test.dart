@@ -4,15 +4,16 @@ import 'package:score_keeper/main.dart';
 
 void main() {
   testWidgets('Creates entrypoint for app', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
-    expect(find.byType(MyApp), findsOneWidget);
+    await tester.pumpWidget(MainApp());
+    expect(find.byType(MainApp), findsOneWidget);
     expect(find.text('p1'), findsNothing);
   });
 
-  testWidgets('Adds one player and shows up in list', (WidgetTester tester) async {
+  testWidgets('Adds one player and shows up in list',
+      (WidgetTester tester) async {
     // create app
-    await tester.pumpWidget(MyApp());
-    expect(find.byType(MyApp), findsOneWidget);
+    await tester.pumpWidget(MainApp());
+    expect(find.byType(MainApp), findsOneWidget);
     expect(find.text('p1'), findsNothing);
 
     // add player in form
@@ -53,5 +54,17 @@ void main() {
     await tester.pump();
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
+    await tester.tap(find.byKey(Key('p1-decrement-score')));
+    await tester.pump();
+    expect(find.text('-1'), findsOneWidget);
+    expect(find.text('0'), findsNothing);
+
+    // test reset score
+    await tester.tap(find.byKey(Key('reset-game-scores')));
+    await tester.pump();
+    await tester.tap(find.byKey(Key('score-reset-confirm')));
+    await tester.pump();
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('-1'), findsNothing);
   });
 }

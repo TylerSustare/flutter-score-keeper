@@ -8,11 +8,14 @@ class PlayerListView extends StatelessWidget {
   PlayerListView(
       {@required this.playerList,
       @required this.onDeletePlayer,
-      @required this.onAddPlayer});
+      @required this.onAddPlayer,
+      @required this.onResetPlayerScores,
+      });
 
   final List<Player> playerList;
   final Function onDeletePlayer;
   final Function onAddPlayer;
+  final Function onResetPlayerScores;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class PlayerListView extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => Game(
                                 playerList: playerList,
+                                onResetPlayerScores: onResetPlayerScores,
                               ),
                             ),
                           );
