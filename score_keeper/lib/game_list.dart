@@ -3,38 +3,40 @@ import 'dart:core';
 
 import 'package:score_keeper/player.dart';
 
-class GameList extends StatefulWidget {
-  GameList({@required this.players});
+import 'game.dart';
 
-  final List<Player> players;
+class GameList extends StatefulWidget {
+  GameList({@required this.game});
+
+  final Game game;
 
   @override
-  GameListState createState() => GameListState(players: players);
+  GameListState createState() => GameListState(game: game);
 }
 
 class GameListState extends State<GameList> {
-  GameListState({@required this.players});
+  GameListState({@required this.game});
 
-  final List<Player> players;
+  final Game game;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
       // padding: const EdgeInsets.all(8.0),
-      itemCount: players.length,
+      itemCount: game.players.length,
       itemBuilder: (BuildContext context, int index) {
         return new Card(
           child: new ListTile(
             leading: Text(
-              '${players[index].score.toInt()}',
+              '${game.players[index].score.toInt()}',
               style: new TextStyle(
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,
                   fontSize: 22),
             ),
             title: Text(
-              '${players[index].name}',
+              '${game.players[index].name}',
               style: new TextStyle(
                 color: Colors.red,
               ),
@@ -47,11 +49,11 @@ class GameListState extends State<GameList> {
                     color: Colors.grey[700],
                   ),
                   onPressed: () {
-                    players[index].decrementScore();
-                    setState(() => players);
+                    game.players[index].decrementScore();
+                    setState(() => game.players);
                   },
                   key: new Key(
-                    '${players[index].name}-decrement-score',
+                    '${game.players[index].name}-decrement-score',
                   ),
                 ),
                 new FlatButton(
@@ -60,11 +62,11 @@ class GameListState extends State<GameList> {
                     color: Colors.grey[700],
                   ),
                   onPressed: () {
-                    players[index].incrementScore();
-                    setState(() => players);
+                    game.players[index].incrementScore();
+                    setState(() => game.players);
                   },
                   key: new Key(
-                    '${players[index].name}-increment-score',
+                    '${game.players[index].name}-increment-score',
                   ),
                 ),
               ],

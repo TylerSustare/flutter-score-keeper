@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:score_keeper/player_list.dart';
 import 'package:score_keeper/form.dart';
 import 'package:score_keeper/player.dart';
-import 'package:score_keeper/views/game.dart';
+import 'package:score_keeper/views/game_view.dart';
 
 class PlayerListView extends StatelessWidget {
   PlayerListView(
@@ -35,7 +35,7 @@ class PlayerListView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Game(
+                              builder: (context) => GameView(
                                 playerList: playerList,
                                 onResetPlayerScores: onResetPlayerScores,
                               ),

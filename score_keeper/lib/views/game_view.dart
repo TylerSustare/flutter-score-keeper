@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:score_keeper/game_list.dart';
 import 'package:score_keeper/player.dart';
+import 'package:score_keeper/game.dart';
 
-class Game extends StatefulWidget {
-  Game({@required this.playerList, @required this.onResetPlayerScores});
+class GameView extends StatefulWidget {
+  GameView({@required this.playerList, @required this.onResetPlayerScores});
 
   final Function onResetPlayerScores;
   final List<Player> playerList;
@@ -12,7 +13,7 @@ class Game extends StatefulWidget {
   _GameState createState() => _GameState();
 }
 
-class _GameState extends State<Game> {
+class _GameState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +57,7 @@ class _GameState extends State<Game> {
         ],
       ),
       body: GameList(
-        players: widget.playerList,
+        game: new Game(players: widget.playerList),
       ),
     );
   }
