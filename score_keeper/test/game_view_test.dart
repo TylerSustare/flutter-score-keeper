@@ -90,4 +90,62 @@ void main() {
     expect(find.text('0'), findsOneWidget);
     tearDown();
   });
+
+  testWidgets('Taping edit score button brings up dialog to edit',
+      (WidgetTester tester) async {
+    setUp();
+    await tester.pumpWidget(MaterialApp(
+      home: GameList(
+        game: new Game(players: players),
+      ),
+    ));
+    await tester.tap(find.byKey(Key('p1-edit-score')));
+    await tester.pump();
+    expect(find.byKey(Key('cancel-edit-score')), findsOneWidget);
+    expect(find.byKey(Key('add-edit-score')), findsOneWidget);
+    expect(find.byKey(Key('subtract-edit-score')), findsOneWidget);
+    // close the dialog to not have a hanging animation after test is over
+    await tester.tap(find.byKey(Key('cancel-edit-score')));
+    await tester.pump();
+    tearDown();
+  });
+
+  testWidgets('Taping edit-score add-score button adds to score',
+      (WidgetTester tester) async {
+    setUp();
+    await tester.pumpWidget(MaterialApp(
+      home: GameList(
+        game: new Game(players: players),
+      ),
+    ));
+    expect(find.text('0'), findsOneWidget); 
+    expect(find.text('11'), findsNothing); 
+    await tester.tap(find.byKey(Key('p1-edit-score')));
+    await tester.pump();
+    await tester.enterText(find.byKey(Key('text-edit-score')), '11');
+    await tester.tap(find.byKey(Key('add-edit-score')));
+    await tester.pump();
+    expect(find.text('11'), findsOneWidget); 
+    tearDown();
+  });
+
+    testWidgets('Taping edit-score subtract-score button removes from score',
+      (WidgetTester tester) async {
+    setUp();
+    players[0].addScore(scoreToAdd: 100);
+    await tester.pumpWidget(MaterialApp(
+      home: GameList(
+        game: new Game(players: players),
+      ),
+    ));
+    expect(find.text('100'), findsOneWidget); 
+    expect(find.text('2'), findsNothing); 
+    await tester.tap(find.byKey(Key('p1-edit-score')));
+    await tester.pump();
+    await tester.enterText(find.byKey(Key('text-edit-score')), '98');
+    await tester.tap(find.byKey(Key('subtract-edit-score')));
+    await tester.pump();
+    expect(find.text('2'), findsOneWidget); 
+    tearDown();
+  });
 }
