@@ -71,13 +71,13 @@ class GameListState extends State<GameList> {
                       color: Colors.grey[700],
                     ),
                     onPressed: () async {
-                      // _settingModalBottomSheet(context);
-                      var a = await _displayDialog(context);
-                      if (a != null) {
+                      // _settingModalBottomSheet(context); // maybe one day SO will answer https://url.sustare.dev/gJ1FK
+                      var add = await _displayDialog(context);
+                      if (add != null) {
                         game.players[index]
-                            .addScore(scoreToAdd: double.tryParse(a) ?? 0);
+                            .addScore(scoreToAdd: double.tryParse(add) ?? 0);
+                        setState(() => game.players);
                       }
-                      setState(() => game.players);
                     },
                     key: new Key(
                       '${game.players[index].name}-edit-score',
@@ -157,6 +157,7 @@ class GameListState extends State<GameList> {
   }
 }
 
+// here as a sad reminder of https://url.sustare.dev/gJ1FK
 void _settingModalBottomSheet(context) {
   showModalBottomSheet(
     context: context,
