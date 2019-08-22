@@ -50,4 +50,8 @@ void main() {
     await tester.pump();
     expect(find.text('p1'), findsNothing);
   });
+
+  testWidgets('Tests form validation', (WidgetTester tester) async{
+    expect(true, false);
+  }, skip: true);
 }

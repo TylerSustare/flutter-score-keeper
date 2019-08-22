@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:score_keeper/player_list.dart';
 import 'package:score_keeper/form.dart';
-import 'package:score_keeper/player.dart';
 import 'package:score_keeper/views/game_view.dart';
+
+import '../game.dart';
 
 class PlayerListView extends StatelessWidget {
   PlayerListView(
-      {@required this.playerList,
+      {@required this.game,
       @required this.onDeletePlayer,
       @required this.onAddPlayer,
-      @required this.onResetPlayerScores,
       });
 
-  final List<Player> playerList;
+  final Game game;
   final Function onDeletePlayer;
   final Function onAddPlayer;
-  final Function onResetPlayerScores;
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +23,19 @@ class PlayerListView extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: <Widget>[
-            PlayerForm(onAddPlayer: this.onAddPlayer, playerList: playerList),
+            PlayerForm(onAddPlayer: this.onAddPlayer, playerList: game.players),
             PlayerList(
-                players: playerList, onDeletePlayer: this.onDeletePlayer),
+                players: game.players, onDeletePlayer: this.onDeletePlayer),
             Row(
               children: <Widget>[
-                playerList.length > 0
+                game.players.length > 0
                     ? RaisedButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => GameView(
-                                playerList: playerList,
-                                onResetPlayerScores: onResetPlayerScores,
+                                game: game
                               ),
                             ),
                           );
