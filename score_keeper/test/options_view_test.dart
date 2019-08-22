@@ -31,15 +31,70 @@ void main() {
     expect(find.text('spoon'), findsNothing);
   });
 
-  testWidgets('Options page shows initial increment and decrement values', (WidgetTester tester) async {
+  testWidgets('Options page shows initial increment and decrement values',
+      (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
       home: OptionsView(
         game: game,
       ),
     ));
-    expect(find.text('2'), findsNWidgets(1));
-    expect(find.text('1'), findsNWidgets(1));
+    expect(find.text('1'), findsNWidgets(2));
+    tearDown();
+  });
+
+  testWidgets('Options page shows change dialog', (WidgetTester tester) async {
+    setUp();
+    await tester.pumpWidget(MaterialApp(
+      home: OptionsView(
+        game: game,
+      ),
+    ));
+    // incrementing score
+    await tester.tap(find.byKey(Key('change-increment-score')));
+    await tester.pump();
+    expect(find.text('Change Value'), findsOneWidget);
+    await tester.tap(find.byKey(Key('cancel-edit-inc-dec-value')));
+    await tester.pump();
+    expect(find.text('Change Value'), findsNothing);
+
+    // decrementing score
+    await tester.tap(find.byKey(Key('change-decrement-score')));
+    await tester.pump();
+    expect(find.text('Change Value'), findsOneWidget);
+    await tester.tap(find.byKey(Key('cancel-edit-inc-dec-value')));
+    await tester.pump();
+    expect(find.text('Change Value'), findsNothing);
+
+    expect(game.incrementValue, 1);
+    expect(game.decrementValue, 1);
+    tearDown();
+  });
+
+  testWidgets('Options page changes game increment and decrement values',
+      (WidgetTester tester) async {
+    setUp();
+    await tester.pumpWidget(MaterialApp(
+      home: OptionsView(
+        game: game,
+      ),
+    ));
+    // incrementing score
+    await tester.tap(find.byKey(Key('change-increment-score')));
+    await tester.pump();
+    await tester.enterText(find.byKey(Key('text-inc-dec-value')), '10');
+    await tester.tap(find.byKey(Key('edit-inc-dec-value')));
+    await tester.pump();
+
+    // decrementing score
+    await tester.tap(find.byKey(Key('change-decrement-score')));
+    await tester.pump();
+    await tester.enterText(find.byKey(Key('text-inc-dec-value')), '10');
+    await tester.tap(find.byKey(Key('edit-inc-dec-value')));
+    await tester.pump();
+
+    expect(game.incrementValue, 10);
+    expect(game.decrementValue, 10);
     tearDown();
   });
 }
