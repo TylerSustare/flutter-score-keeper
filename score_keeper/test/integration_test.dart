@@ -4,7 +4,7 @@ import 'package:score_keeper/main.dart';
 
 void main() {
   testWidgets('Creates entrypoint for app', (WidgetTester tester) async {
-    await tester.pumpWidget(MainApp());
+    await tester.pumpWidget(MaterialApp(home: MainApp()));
     expect(find.byType(MainApp), findsOneWidget);
     expect(find.text('p1'), findsNothing);
   });
@@ -12,7 +12,7 @@ void main() {
   testWidgets('Adds one player and shows up in list',
       (WidgetTester tester) async {
     // create app
-    await tester.pumpWidget(MainApp());
+    await tester.pumpWidget(MaterialApp(home: MainApp()));
     expect(find.byType(MainApp), findsOneWidget);
     expect(find.text('p1'), findsNothing);
 
@@ -66,5 +66,23 @@ void main() {
     await tester.pump();
     expect(find.text('0'), findsOneWidget);
     expect(find.text('-1'), findsNothing);
+
+    // test changing score by any amount
+    // add
+    await tester.tap(find.byKey(Key('p1-edit-score')));
+    await tester.pump();
+    await tester.enterText(find.byKey(Key('text-edit-score')), '99');
+    await tester.tap(find.byKey(Key('add-edit-score')));
+    await tester.pump();
+    expect(find.text('99'), findsOneWidget);
+    expect(find.text('0'), findsNothing);
+    // subtract
+    await tester.tap(find.byKey(Key('p1-edit-score')));
+    await tester.pump();
+    await tester.enterText(find.byKey(Key('text-edit-score')), '98');
+    await tester.tap(find.byKey(Key('subtract-edit-score')));
+    await tester.pump();
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('99'), findsNothing);
   });
 }

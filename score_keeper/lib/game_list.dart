@@ -37,7 +37,7 @@ class GameListState extends State<GameList> {
             children: <Widget>[
               new ListTile(
                 trailing: Text(
-                  '${game.players[index].score.toInt()}',
+                  '${game.players[index].score}',
                   style: new TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,
@@ -58,7 +58,7 @@ class GameListState extends State<GameList> {
                       color: Colors.grey[700],
                     ),
                     onPressed: () {
-                      game.players[index].decrementScore();
+                      game.players[index].decrementScore(this.game.decrementValue);
                       setState(() => game.players);
                     },
                     key: new Key(
@@ -72,10 +72,10 @@ class GameListState extends State<GameList> {
                     ),
                     onPressed: () async {
                       // _settingModalBottomSheet(context); // maybe one day SO will answer https://url.sustare.dev/gJ1FK
-                      var add = await _displayDialog(context);
+                      String add = await _displayDialog(context);
                       if (add != null) {
                         game.players[index]
-                            .addScore(scoreToAdd: double.tryParse(add) ?? 0);
+                            .addScore(scoreToAdd: int.tryParse(add) ?? 0);
                         setState(() => game.players);
                       }
                     },
@@ -89,7 +89,7 @@ class GameListState extends State<GameList> {
                       color: Colors.grey[700],
                     ),
                     onPressed: () {
-                      game.players[index].incrementScore();
+                      game.players[index].incrementScore(this.game.incrementValue);
                       setState(() => game.players);
                     },
                     key: new Key(
@@ -117,7 +117,6 @@ class GameListState extends State<GameList> {
           content: TextFormField(
             controller: _textFieldController,
             decoration: InputDecoration(hintText: 'Score to Add/Subtract'),
-            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
             keyboardType: TextInputType.number,
             key: Key('text-edit-score'),
           ),

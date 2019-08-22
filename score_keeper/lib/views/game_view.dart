@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:score_keeper/game_list.dart';
-import 'package:score_keeper/player.dart';
 import 'package:score_keeper/game.dart';
 
 class GameView extends StatefulWidget {
-  GameView({@required this.playerList, @required this.onResetPlayerScores});
-
-  final Function onResetPlayerScores;
-  final List<Player> playerList;
+  GameView({@required this.game});
+  final Game game;
 
   @override
-  _GameState createState() => _GameState();
+  _GameState createState() => _GameState(game: game);
 }
 
 class _GameState extends State<GameView> {
+  _GameState({@required this.game});
+  final Game game;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +33,7 @@ class _GameState extends State<GameView> {
                       children: <Widget>[
                         new FlatButton(
                           onPressed: () {
-                            widget.onResetPlayerScores();
+                            this.resetPlayerScore();
                             Navigator.pop(context, 'success');
                           },
                           child: Text('Yes'),
@@ -57,8 +57,15 @@ class _GameState extends State<GameView> {
         ],
       ),
       body: GameList(
-        game: new Game(players: widget.playerList),
+        game: this.game,
       ),
     );
+  }
+
+  void resetPlayerScore() {
+    for (var player in this.game.players) {
+      player.resetScore();
+    }
+    setState(() => this.game.players);
   }
 }

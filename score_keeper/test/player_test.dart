@@ -32,12 +32,25 @@ void main() {
     p1.incrementScore();
     expect(p1.score, 1);
   });
+
+  test('Counter value should be incremented by optional amount', () {
+    final Player p1 = new Player(name: 'Steve');
+    p1.incrementScore(40);
+    expect(p1.score, 40);
+  });
+ 
   test('Counter value should be decremented', () {
     final Player p1 = new Player(name: 'Steve', score: 100);
     p1.decrementScore();
     expect(p1.score, 99);
     p1.decrementScore();
     p1.decrementScore();
+    expect(p1.score, 97);
+  });
+
+    test('Counter value should be decremented, with optional amount', () {
+    final Player p1 = new Player(name: 'Steve', score: 100);
+    p1.decrementScore(3);
     expect(p1.score, 97);
   });
   test('addScore method', () {

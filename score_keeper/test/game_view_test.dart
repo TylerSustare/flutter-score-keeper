@@ -60,7 +60,7 @@ void main() {
     tearDown();
   });
 
-  testWidgets('Decrementthe players score is reflected on the app',
+  testWidgets('Decrementing the players score is reflected on the app',
       (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(

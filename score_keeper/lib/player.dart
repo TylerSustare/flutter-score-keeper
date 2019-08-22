@@ -1,5 +1,5 @@
 class Player {
-  Player({String name, double score}) {
+  Player({String name, int score}) {
     this.name = name;
     this.score = score ?? 0;
 
@@ -8,11 +8,13 @@ class Player {
     }
   }
   String name;
-  double score;
+  int score;
 
-  void incrementScore() => this.score++;
-  void decrementScore() => this.score--;
-  void addScore({double scoreToAdd}) => this.score += scoreToAdd;
-  void subtractScore({double scoreToSubtract}) => this.score -= scoreToSubtract;
+  void incrementScore([int incrementAmount]) =>
+      this.score += incrementAmount ?? 1;
+  void decrementScore([int decrementAmount]) =>
+      this.score -= decrementAmount ?? 1;
+  void addScore({int scoreToAdd}) => this.score += scoreToAdd;
+  void subtractScore({int scoreToSubtract}) => this.score -= scoreToSubtract;
   void resetScore() => this.score = 0;
 }
