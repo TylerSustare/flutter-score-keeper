@@ -17,7 +17,6 @@ class _OptionsViewState extends State<OptionsView> {
 
   @override
   Widget build(BuildContext context) {
-    // this.game.incrementValue = 2;
     return Scaffold(
       appBar: AppBar(
         title: Text('Score Keeper - Options'),
