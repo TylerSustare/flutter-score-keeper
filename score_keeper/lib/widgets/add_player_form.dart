@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:score_keeper/player.dart';
+import 'package:score_keeper/models/player.dart';
 
 // Create a Form widget.
-class PlayerForm extends StatefulWidget {
-  PlayerForm({@required this.onAddPlayer, @required this.playerList});
+class AddPlayerForm extends StatefulWidget {
+  AddPlayerForm({@required this.onAddPlayer, @required this.playerList});
 
   final Function onAddPlayer;
   final List<Player> playerList;
 
   @override
-  PlayerFormState createState() =>
-      PlayerFormState(onAddPlayer: onAddPlayer, playerList: playerList);
+  AddPlayerFormState createState() =>
+      AddPlayerFormState(onAddPlayer: onAddPlayer, playerList: playerList);
 }
 
 // Create a corresponding State class.
-// This class holds data related to the form.
-class PlayerFormState extends State<PlayerForm> {
-  PlayerFormState({@override this.onAddPlayer, @override this.playerList});
+// This class holds data related to the form. Disploses of "controller" as well from the `dispose()` method
+class AddPlayerFormState extends State<AddPlayerForm> {
+  AddPlayerFormState({@override this.onAddPlayer, @override this.playerList});
 
   final Function onAddPlayer;
   final List<Player> playerList;
 
   // Create a global key that uniquely identifies the Form widget and allows validation of the form.
   //
-  // Note: This is a GlobalKey<FormState>, not a GlobalKey<PlayerFormState>.
+  // Note: This is a GlobalKey<FormState>, not a GlobalKey<AddPlayerFormState>.
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
 

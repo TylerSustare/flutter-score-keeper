@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:score_keeper/game.dart';
-import 'package:score_keeper/game_list.dart';
-import 'package:score_keeper/player.dart';
+import 'package:score_keeper/models/game.dart';
+import 'package:score_keeper/widgets/game_score_player_list.dart';
+import 'package:score_keeper/models/player.dart';
 
 void main() {
   List<Player> players = new List<Player>();
@@ -23,22 +23,22 @@ void main() {
 
   testWidgets('List is created with no players', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: GameList(
+      home: GameScorePlayerList(
         game: Game(players: new List<Player>()),
       ),
     ));
-    expect(find.byType(GameList), findsOneWidget);
+    expect(find.byType( GameScorePlayerList), findsOneWidget);
     expect(find.text('p1'), findsNothing);
   });
 
   testWidgets('List is created with one player', (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: GameList(
+      home: GameScorePlayerList(
         game: game,
       ),
     ));
-    expect(find.byType(GameList), findsOneWidget);
+    expect(find.byType( GameScorePlayerList), findsOneWidget);
     expect(find.text('p1'), findsOneWidget); // name
     expect(find.text('0'), findsOneWidget); // score
     expect(find.text('p2'), findsNothing);
@@ -49,7 +49,7 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: GameList(
+      home: GameScorePlayerList(
         game: game,
       ),
     ));
@@ -64,7 +64,7 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: GameList(
+      home: GameScorePlayerList(
         game: game,
       ),
     ));
@@ -80,7 +80,7 @@ void main() {
     setUp();
     game.addPlayer(Player(name: 'p2'));
     await tester.pumpWidget(MaterialApp(
-      home: GameList(
+      home: GameScorePlayerList(
         game: new Game(players: players),
       ),
     ));
@@ -95,7 +95,7 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: GameList(
+      home: GameScorePlayerList(
         game: new Game(players: players),
       ),
     ));
@@ -114,7 +114,7 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: GameList(
+      home: GameScorePlayerList(
         game: new Game(players: players),
       ),
     ));
@@ -134,7 +134,7 @@ void main() {
     setUp();
     players[0].addScore(scoreToAdd: 100);
     await tester.pumpWidget(MaterialApp(
-      home: GameList(
+      home: GameScorePlayerList(
         game: new Game(players: players),
       ),
     ));

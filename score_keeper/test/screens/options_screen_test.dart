@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:score_keeper/game.dart';
-import 'package:score_keeper/player.dart';
-import 'package:score_keeper/views/options_view.dart';
+import 'package:score_keeper/models/game.dart';
+import 'package:score_keeper/models/player.dart';
+import 'package:score_keeper/screens/options_screen.dart';
 
 void main() {
   List<Player> players = new List<Player>();
@@ -23,11 +23,11 @@ void main() {
 
   testWidgets('Options page renders', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: OptionsView(
+      home: OptionsScreen(
         game: Game(players: new List<Player>()),
       ),
     ));
-    expect(find.byType(OptionsView), findsOneWidget);
+    expect(find.byType(OptionsScreen), findsOneWidget);
     expect(find.text('spoon'), findsNothing);
   });
 
@@ -35,7 +35,7 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: OptionsView(
+      home: OptionsScreen(
         game: game,
       ),
     ));
@@ -46,7 +46,7 @@ void main() {
   testWidgets('Options page shows change dialog', (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: OptionsView(
+      home: OptionsScreen(
         game: game,
       ),
     ));
@@ -75,7 +75,7 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: OptionsView(
+      home: OptionsScreen(
         game: game,
       ),
     ));

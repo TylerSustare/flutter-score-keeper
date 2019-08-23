@@ -1,5 +1,5 @@
-import 'package:score_keeper/player.dart';
-import 'package:score_keeper/game.dart';
+import 'package:score_keeper/models/player.dart';
+import 'package:score_keeper/models/game.dart';
 import "package:test/test.dart";
 
 void main() {
