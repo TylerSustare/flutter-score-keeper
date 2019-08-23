@@ -1,16 +1,11 @@
+// try out flutter driver at some point
+// https://flutter.dev/docs/cookbook/testing/integration/introduction
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:score_keeper/main.dart';
 
 void main() {
-  testWidgets('Creates entrypoint for app', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: MainApp()));
-    expect(find.byType(MainApp), findsOneWidget);
-    expect(find.text('p1'), findsNothing);
-  });
-
-  testWidgets('Adds one player and shows up in list',
-      (WidgetTester tester) async {
+  setUp(WidgetTester tester) async {
     // create app
     await tester.pumpWidget(MaterialApp(home: MainApp()));
     expect(find.byType(MainApp), findsOneWidget);
@@ -25,7 +20,17 @@ void main() {
 
     // find player in "PlayerList" widget
     expect(find.text('p1'), findsOneWidget);
+  }
 
+  testWidgets('Creates entrypoint for app', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(home: MainApp()));
+    expect(find.byType(MainApp), findsOneWidget);
+    expect(find.text('p1'), findsNothing);
+  });
+
+  testWidgets('Keeps score for one player with default inc/dec',
+      (WidgetTester tester) async {
+    await setUp(tester);
     // switch screens
     expect(find.byKey(Key('keep-score')), findsOneWidget);
     await tester.tap(find.byKey(Key('keep-score')));
@@ -84,5 +89,67 @@ void main() {
     await tester.pump();
     expect(find.text('1'), findsOneWidget);
     expect(find.text('99'), findsNothing);
+  });
+
+  testWidgets('Keeps score for one player with custom inc/dec',
+      (WidgetTester tester) async {
+    await setUp(tester);
+    // navigate to options page
+    await tester.tap(find.byKey(Key('nav-to-options-page')));
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('value'), findsNWidgets(2));
+
+    // incrementing score
+    await tester.tap(find.byKey(Key('change-increment-score')));
+    await tester.pump();
+    await tester.enterText(find.byKey(Key('text-inc-dec-value')), '10');
+    await tester.tap(find.byKey(Key('edit-inc-dec-value')));
+    await tester.pump();
+
+    // decrementing score
+    await tester.tap(find.byKey(Key('change-decrement-score')));
+    await tester.pump();
+    await tester.enterText(find.byKey(Key('text-inc-dec-value')), '10');
+    await tester.tap(find.byKey(Key('edit-inc-dec-value')));
+    await tester.pump();
+
+    // nav back to  main screen
+    await tester.tap(find.byType(BackButton));
+    await tester.pump();
+    await tester.pump();
+
+    // switch screens
+    expect(find.byKey(Key('keep-score')), findsOneWidget);
+    await tester.tap(find.byKey(Key('keep-score')));
+    await tester.pump();
+    await tester.pump();
+
+    // test we're on the next screen
+    expect(find.text('0'), findsOneWidget);
+
+    // test incrementing score
+    await tester.tap(find.byKey(Key('p1-increment-score')));
+    await tester.pump();
+    expect(find.text('10'), findsOneWidget);
+    expect(find.text('0'), findsNothing);
+    await tester.tap(find.byKey(Key('p1-increment-score')));
+    await tester.pump();
+    expect(find.text('20'), findsOneWidget);
+    expect(find.text('10'), findsNothing);
+
+    // test decrementing score
+    await tester.tap(find.byKey(Key('p1-decrement-score')));
+    await tester.pump();
+    expect(find.text('10'), findsOneWidget);
+    expect(find.text('20'), findsNothing);
+    await tester.tap(find.byKey(Key('p1-decrement-score')));
+    await tester.pump();
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('10'), findsNothing);
+    await tester.tap(find.byKey(Key('p1-decrement-score')));
+    await tester.pump();
+    expect(find.text('-10'), findsOneWidget);
+    expect(find.text('0'), findsNothing);
   });
 }

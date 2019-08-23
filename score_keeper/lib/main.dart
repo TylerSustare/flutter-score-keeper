@@ -37,6 +37,7 @@ class _MainAppState extends State<MainApp> {
               ),
             );
           },
+          key: Key('nav-to-options-page'),
         ),
         title: Text('Score Keeper - Players'),
         backgroundColor: Colors.pink,
