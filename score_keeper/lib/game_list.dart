@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'dart:core';
 import 'game.dart';
 
@@ -17,6 +18,7 @@ class GameListState extends State<GameList> {
 
   TextEditingController _textFieldController = TextEditingController();
   final Game game;
+   final formatter = new NumberFormat("#,###");
 
   @override
   void dispose() {
@@ -29,7 +31,6 @@ class GameListState extends State<GameList> {
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
-      // padding: const EdgeInsets.all(8.0),
       itemCount: game.players.length,
       itemBuilder: (BuildContext context, int index) {
         return new Card(
@@ -37,7 +38,7 @@ class GameListState extends State<GameList> {
             children: <Widget>[
               new ListTile(
                 trailing: Text(
-                  '${game.players[index].score}',
+                  formatter.format(game.players[index].score),
                   style: new TextStyle(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,
@@ -58,7 +59,8 @@ class GameListState extends State<GameList> {
                       color: Colors.grey[700],
                     ),
                     onPressed: () {
-                      game.players[index].decrementScore(this.game.decrementValue);
+                      game.players[index]
+                          .decrementScore(this.game.decrementValue);
                       setState(() => game.players);
                     },
                     key: new Key(
@@ -89,7 +91,8 @@ class GameListState extends State<GameList> {
                       color: Colors.grey[700],
                     ),
                     onPressed: () {
-                      game.players[index].incrementScore(this.game.incrementValue);
+                      game.players[index]
+                          .incrementScore(this.game.incrementValue);
                       setState(() => game.players);
                     },
                     key: new Key(
@@ -117,8 +120,10 @@ class GameListState extends State<GameList> {
           content: TextFormField(
             controller: _textFieldController,
             decoration: InputDecoration(hintText: 'Score to Add/Subtract'),
+            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
             keyboardType: TextInputType.number,
             key: Key('text-edit-score'),
+            autofocus: true,
           ),
           actions: <Widget>[
             new FlatButton(

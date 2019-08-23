@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:score_keeper/game.dart';
 
 class OptionsView extends StatefulWidget {
@@ -106,8 +107,10 @@ class _OptionsViewState extends State<OptionsView> {
           content: TextFormField(
             controller: _textFieldController,
             decoration: InputDecoration(hintText: 'Number'),
+            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
             keyboardType: TextInputType.number,
             key: Key('text-inc-dec-value'),
+            autofocus: true,
           ),
           actions: <Widget>[
             new FlatButton(
