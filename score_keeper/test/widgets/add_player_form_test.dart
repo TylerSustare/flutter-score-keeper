@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:score_keeper/form.dart';
-import 'package:score_keeper/player.dart';
+import 'package:score_keeper/widgets/add_player_form.dart';
+import 'package:score_keeper/models/player.dart';
 import 'package:mockito/mockito.dart' as mockito;
 
 class Faker {
@@ -16,17 +16,17 @@ void main() {
 
   testWidgets('Form is created', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: PlayerForm(
+      home: AddPlayerForm(
         playerList: players,
         onAddPlayer: () {},
       ),
     ));
-    expect(find.byType(PlayerForm), findsOneWidget);
+    expect(find.byType(AddPlayerForm), findsOneWidget);
   });
 
   testWidgets('Form can add characters', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: PlayerForm(
+      home: AddPlayerForm(
         playerList: players,
         onAddPlayer: new Faker().add,
       ),
@@ -38,7 +38,7 @@ void main() {
 
   testWidgets('Form clears characters after adding to the game', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: PlayerForm(
+      home: AddPlayerForm(
         playerList: players,
         onAddPlayer: new Faker().add,
       ),

@@ -1,4 +1,4 @@
-import 'package:score_keeper/player.dart';
+import 'package:score_keeper/models/player.dart';
 
 class Game {
   Game({List<Player> players, int goal}) {

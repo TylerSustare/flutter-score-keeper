@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:score_keeper/game.dart';
+import 'package:score_keeper/models/game.dart';
 
-class OptionsView extends StatefulWidget {
-  OptionsView({@required this.game});
+class OptionsScreen extends StatefulWidget {
+  OptionsScreen({@required this.game});
   final Game game;
 
   @override
-  _OptionsViewState createState() => _OptionsViewState(game: this.game);
+  _OptionsScreenState createState() => _OptionsScreenState(game: this.game);
 }
 
-class _OptionsViewState extends State<OptionsView> {
-  _OptionsViewState({@required this.game});
+class _OptionsScreenState extends State<OptionsScreen> {
+  _OptionsScreenState({@required this.game});
   final Game game;
   TextEditingController _textFieldController = TextEditingController();
 

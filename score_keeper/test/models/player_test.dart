@@ -1,4 +1,4 @@
-import 'package:score_keeper/player.dart';
+import 'package:score_keeper/models/player.dart';
 import "package:test/test.dart";
 
 void main() {

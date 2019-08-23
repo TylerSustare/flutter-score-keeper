@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:score_keeper/player.dart';
-import 'package:score_keeper/views/list.dart';
-import 'package:score_keeper/views/options_view.dart';
+import 'package:score_keeper/models/player.dart';
+import 'package:score_keeper/screens/players_screen.dart';
 
-import 'game.dart';
+import 'models/game.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -22,31 +21,10 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: FlatButton(
-          child: Icon(
-            Icons.settings,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => OptionsView(game: game),
-              ),
-            );
-          },
-          key: Key('nav-to-options-page'),
-        ),
-        title: Text('Score Keeper - Players'),
-        backgroundColor: Colors.pink,
-      ),
-      body: PlayerListView(
-        game: game,
-        onDeletePlayer: this.onDeletePlayer,
-        onAddPlayer: this.onAddPlayer,
-      ),
+    return PlayersScreen(
+      game: this.game,
+      onAddPlayer: this.onAddPlayer,
+      onDeletePlayer: this.onDeletePlayer,
     );
   }
 

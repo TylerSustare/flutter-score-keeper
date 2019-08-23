@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart' as mockito;
 
-import 'package:score_keeper/player_list.dart';
-import 'package:score_keeper/player.dart';
+import 'package:score_keeper/widgets/display_player_list.dart';
+import 'package:score_keeper/models/player.dart';
 
 class Faker {
   void del({String playerName}) => print('you_spoony_bard');
@@ -26,24 +26,24 @@ void main() {
 
   testWidgets('List is created with no players', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: PlayerList(
+      home: DisplayPlayerList(
         players: new List<Player>(),
         onDeletePlayer: () {},
       ),
     ));
-    expect(find.byType(PlayerList), findsOneWidget);
+    expect(find.byType(DisplayPlayerList), findsOneWidget);
     expect(find.text('p1'), findsNothing);
   });
 
   testWidgets('List is created with two players', (WidgetTester tester) async {
     setUp();
     await tester.pumpWidget(MaterialApp(
-      home: PlayerList(
+      home: DisplayPlayerList(
         players: players,
         onDeletePlayer: new Faker().del,
       ),
     ));
-    expect(find.byType(PlayerList), findsOneWidget);
+    expect(find.byType(DisplayPlayerList), findsOneWidget);
     expect(find.text('p1'), findsOneWidget);
     expect(find.text('p2'), findsNothing);
     tearDown();
@@ -53,7 +53,7 @@ void main() {
     setUp();
     final mock = MockDel();
     await tester.pumpWidget(MaterialApp(
-      home: PlayerList(
+      home: DisplayPlayerList(
         players: players,
         onDeletePlayer: mock.del,
       ),
@@ -62,16 +62,16 @@ void main() {
     await tester.tap(deleteIcon);
     await tester.pump();
     final alert = find.text('Delete "p1" from game?');
-    expect(alert,findsOneWidget);
+    expect(alert, findsOneWidget);
     tearDown();
   });
 
-
-  testWidgets('Icon tap and confirm tap calls "onDeletePlayer"', (WidgetTester tester) async {
+  testWidgets('Icon tap and confirm tap calls "onDeletePlayer"',
+      (WidgetTester tester) async {
     setUp();
     final mock = MockDel();
     await tester.pumpWidget(MaterialApp(
-      home: PlayerList(
+      home: DisplayPlayerList(
         players: players,
         onDeletePlayer: mock.del,
       ),
@@ -85,11 +85,12 @@ void main() {
     tearDown();
   });
 
-  testWidgets('Icon tap and cancel tap does not call "onDeletePlayer"', (WidgetTester tester) async {
+  testWidgets('Icon tap and cancel tap does not call "onDeletePlayer"',
+      (WidgetTester tester) async {
     setUp();
     final mock = MockDel();
     await tester.pumpWidget(MaterialApp(
-      home: PlayerList(
+      home: DisplayPlayerList(
         players: players,
         onDeletePlayer: mock.del,
       ),
@@ -102,5 +103,4 @@ void main() {
     mockito.verifyNever(mock.del(playerName: 'p1'));
     tearDown();
   });
-
 }

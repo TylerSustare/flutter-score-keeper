@@ -1,21 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-import 'package:score_keeper/player.dart';
+import 'package:score_keeper/models/player.dart';
 
-class PlayerList extends StatefulWidget {
-  PlayerList({@required this.players, @required this.onDeletePlayer});
-
-  final List<Player> players;
-  final Function onDeletePlayer;
-
-  @override
-  PlayerListState createState() =>
-      PlayerListState(players: players, onDeletePlayer: onDeletePlayer);
-}
-
-class PlayerListState extends State<PlayerList> {
-  PlayerListState({@required this.players, @required this.onDeletePlayer});
+class DisplayPlayerList extends StatelessWidget {
+  DisplayPlayerList({@required this.players, @required this.onDeletePlayer});
 
   final List<Player> players;
   final Function onDeletePlayer;
