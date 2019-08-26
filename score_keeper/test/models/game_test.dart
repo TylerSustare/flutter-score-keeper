@@ -31,4 +31,16 @@ void main() {
     expect(game.players[0].score, 2);
     tearDown();
   });
+
+  test('test is game over', (){
+    setUp();
+    Game game = new Game(players: players);
+    expect(game.isGameOver(), false); // goal has not been set
+    game.goal = 4;
+    expect(game.isGameOver(), false); // goal has not been met
+    game.players[0].incrementScore();
+    expect(game.isGameOver(), false);
+    game.players[0].incrementScore();
+    expect(game.isGameOver(), true);
+  });
 }
