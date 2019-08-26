@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:score_keeper/models/game.dart';
+import 'package:score_keeper/widgets/change_inc_dec_value_dialog.dart';
 
 class OptionsScreen extends StatefulWidget {
   OptionsScreen({@required this.game});
@@ -14,6 +14,12 @@ class _OptionsScreenState extends State<OptionsScreen> {
   _OptionsScreenState({@required this.game});
   final Game game;
   TextEditingController _textFieldController = TextEditingController();
+
+  @override
+  void dispose() {
+    _textFieldController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +79,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
                       setState(() => game.decrementValue);
                     }
                   },
-                  key: new Key(
-                    'change-decrement-score',
-                  ),
+                  key: new Key('change-decrement-score'),
                 ),
                 title: Row(
                   children: <Widget>[
@@ -101,37 +105,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
     return showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text('Change Value'),
-          content: TextFormField(
-            controller: _textFieldController,
-            decoration: InputDecoration(hintText: 'Number'),
-            inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-            keyboardType: TextInputType.number,
-            key: Key('text-inc-dec-value'),
-            autofocus: true,
-          ),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text('Cancel'),
-              key: Key('cancel-edit-inc-dec-value'),
-              onPressed: () {
-                Navigator.pop(context, '');
-                _textFieldController.clear();
-              },
-            ),
-            new RaisedButton(
-              child: new Text('Update'),
-              key: Key('edit-inc-dec-value'),
-              color: Colors.blue,
-              textColor: Colors.white,
-              onPressed: () {
-                Navigator.pop(context, _textFieldController.value.text);
-                _textFieldController.clear();
-              },
-            ),
-          ],
-        );
+        return ChangeIncDecValueDialog(textController: _textFieldController);
       },
     );
   }

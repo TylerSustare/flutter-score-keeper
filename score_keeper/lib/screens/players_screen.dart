@@ -4,12 +4,14 @@ import 'package:score_keeper/widgets/player_setup_container.dart';
 import 'options_screen.dart';
 
 class PlayersScreen extends StatelessWidget {
-  PlayersScreen({@required this.game, @required this.onDeletePlayer, @required this.onAddPlayer});
+  PlayersScreen(
+      {@required this.game,
+      @required this.onDeletePlayer,
+      @required this.onAddPlayer});
 
   final Game game;
   final Function onDeletePlayer;
   final Function onAddPlayer;
-
 
   @override
   Widget build(BuildContext context) {

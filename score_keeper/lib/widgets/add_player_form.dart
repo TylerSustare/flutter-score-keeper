@@ -14,7 +14,7 @@ class AddPlayerForm extends StatefulWidget {
 }
 
 // Create a corresponding State class.
-// This class holds data related to the form. Disploses of "controller" as well from the `dispose()` method
+// This class holds data related to the form. Disposes of "controller" as well from the `dispose()` method
 class AddPlayerFormState extends State<AddPlayerForm> {
   AddPlayerFormState({@override this.onAddPlayer, @override this.playerList});
 
@@ -22,15 +22,14 @@ class AddPlayerFormState extends State<AddPlayerForm> {
   final List<Player> playerList;
 
   // Create a global key that uniquely identifies the Form widget and allows validation of the form.
-  //
   // Note: This is a GlobalKey<FormState>, not a GlobalKey<AddPlayerFormState>.
   final _formKey = GlobalKey<FormState>();
-  final myController = TextEditingController();
+  final textController = TextEditingController();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    myController.dispose();
+    textController.dispose();
     super.dispose();
   }
 
@@ -46,7 +45,7 @@ class AddPlayerFormState extends State<AddPlayerForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextFormField(
-                controller: myController,
+                controller: textController,
                 decoration: InputDecoration(
                   labelText: 'Add player',
                 ),
@@ -78,7 +77,7 @@ class AddPlayerFormState extends State<AddPlayerForm> {
                             Scaffold.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Added "${myController.text}" to game...',
+                                  'Added "${textController.text}" to game...',
                                 ),
                                 duration: Duration(seconds: 1),
                                 backgroundColor: Colors.pinkAccent,
@@ -87,8 +86,8 @@ class AddPlayerFormState extends State<AddPlayerForm> {
                           } catch (e) {
                             // log error
                           }
-                          onAddPlayer(name: myController.text);
-                          myController.clear();
+                          onAddPlayer(name: textController.text);
+                          textController.clear();
                         }
                       },
                       child: Icon(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:core';
 
 import 'package:score_keeper/models/player.dart';
+import 'delete_player_dialog.dart';
 
 class DisplayPlayerList extends StatelessWidget {
   DisplayPlayerList({@required this.players, @required this.onDeletePlayer});
@@ -34,31 +35,10 @@ class DisplayPlayerList extends StatelessWidget {
               onPressed: () async {
                 await showDialog(
                   context: context,
-                  builder: (_) => new AlertDialog(
-                    title:
-                        new Text('Delete "${players[index].name}" from game?'),
-                    content: new Text("This can't be undone"),
-                    actions: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          new FlatButton(
-                            onPressed: () {
-                              onDeletePlayer(playerName: players[index].name);
-                              Navigator.pop(context, 'success');
-                            },
-                            child: Text('Yes'),
-                            key: new Key('${players[index].name}-delete-confirm'),
-                          ),
-                          new FlatButton(
-                            onPressed: () {
-                              Navigator.pop(context, 'abandoned');
-                            },
-                            child: Text('No'),
-                            key: new Key('${players[index].name}-delete-cancel'),
-                          ),
-                        ],
-                      ),
-                    ],
+                  builder: (_) => DeletePlayerDialog(
+                    index: index,
+                    players: players,
+                    onDeletePlayer: onDeletePlayer,
                   ),
                 );
               },

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:score_keeper/widgets/player_name_and_score_tile.dart';
+import 'package:score_keeper/widgets/score_controls.dart';
 import 'dart:core';
 import '../models/game.dart';
-import 'change_score_dialog.dart';
 
 class GameScorePlayerList extends StatefulWidget {
   GameScorePlayerList({@required this.game});
@@ -38,51 +37,11 @@ class GameScorePlayerListState extends State<GameScorePlayerList> {
           child: Column(
             children: <Widget>[
               PlayerNameAndScoreTile(game: game, index: index),
-              Row(
-                children: <Widget>[
-                  new FlatButton(
-                    child: new Icon(
-                      Icons.remove,
-                      color: Colors.grey[700],
-                    ),
-                    onPressed: () {
-                      game.players[index]
-                          .decrementScore(this.game.decrementValue);
-                      setState(() => game.players);
-                    },
-                    key: new Key('${game.players[index].name}-decrement-score'),
-                  ),
-                  new FlatButton(
-                    child: new Icon(
-                      Icons.edit,
-                      color: Colors.grey[700],
-                    ),
-                    onPressed: () async {
-                      // _settingModalBottomSheet(context); // maybe one day SO will answer https://url.sustare.dev/gJ1FK
-                      String add = await _displayDialog(context);
-                      if (add != null) {
-                        game.players[index]
-                            .addScore(scoreToAdd: int.tryParse(add) ?? 0);
-                        setState(() => game.players);
-                      }
-                    },
-                    key: new Key('${game.players[index].name}-edit-score'),
-                  ),
-                  new FlatButton(
-                    child: new Icon(
-                      Icons.add,
-                      color: Colors.grey[700],
-                    ),
-                    onPressed: () {
-                      game.players[index]
-                          .incrementScore(this.game.incrementValue);
-                      setState(() => game.players);
-                    },
-                    key: new Key('${game.players[index].name}-increment-score'),
-                  ),
-                ],
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              ScoreControls(
+                changeScores: _changeScores,
+                game: game,
+                index: index,
+                textController: _textFieldController,
               ),
             ],
           ),
@@ -92,12 +51,5 @@ class GameScorePlayerListState extends State<GameScorePlayerList> {
     );
   }
 
-  _displayDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return ChangeScoreDialog(textFieldController: _textFieldController);
-      },
-    );
-  }
+  void _changeScores() => setState(() => game.players);
 }
