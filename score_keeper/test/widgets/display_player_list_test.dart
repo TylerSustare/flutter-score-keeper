@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart' as mockito;
+import 'package:provider/provider.dart';
+import 'package:score_keeper/models/theme.dart';
 
 import 'package:score_keeper/widgets/display_player_list.dart';
 import 'package:score_keeper/models/player.dart';
@@ -17,7 +19,7 @@ void main() {
   setUp() {
     players = <Player>[
       Player(name: 'p1'),
-    ]; // apparently arrays are lists
+    ]; // arrays are lists
   }
 
   tearDown() {
@@ -25,10 +27,13 @@ void main() {
   }
 
   testWidgets('List is created with no players', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(
-      home: DisplayPlayerList(
-        players: new List<Player>(),
-        onDeletePlayer: () {},
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: DisplayPlayerList(
+          players: new List<Player>(),
+          onDeletePlayer: () {},
+        ),
       ),
     ));
     expect(find.byType(DisplayPlayerList), findsOneWidget);
@@ -37,10 +42,13 @@ void main() {
 
   testWidgets('List is created with two players', (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: DisplayPlayerList(
-        players: players,
-        onDeletePlayer: new Faker().del,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: DisplayPlayerList(
+          players: players,
+          onDeletePlayer: new Faker().del,
+        ),
       ),
     ));
     expect(find.byType(DisplayPlayerList), findsOneWidget);
@@ -52,10 +60,13 @@ void main() {
   testWidgets('Icon tap brings up confirm alert ', (WidgetTester tester) async {
     setUp();
     final mock = MockDel();
-    await tester.pumpWidget(MaterialApp(
-      home: DisplayPlayerList(
-        players: players,
-        onDeletePlayer: mock.del,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: DisplayPlayerList(
+          players: players,
+          onDeletePlayer: mock.del,
+        ),
       ),
     ));
     final deleteIcon = find.byKey(Key('p1-delete'));
@@ -70,10 +81,13 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     final mock = MockDel();
-    await tester.pumpWidget(MaterialApp(
-      home: DisplayPlayerList(
-        players: players,
-        onDeletePlayer: mock.del,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: DisplayPlayerList(
+          players: players,
+          onDeletePlayer: mock.del,
+        ),
       ),
     ));
     final deleteIcon = find.byKey(Key('p1-delete'));
@@ -89,10 +103,13 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     final mock = MockDel();
-    await tester.pumpWidget(MaterialApp(
-      home: DisplayPlayerList(
-        players: players,
-        onDeletePlayer: mock.del,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: DisplayPlayerList(
+          players: players,
+          onDeletePlayer: mock.del,
+        ),
       ),
     ));
     final deleteIcon = find.byKey(Key('p1-delete'));

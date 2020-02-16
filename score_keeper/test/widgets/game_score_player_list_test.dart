@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import 'package:score_keeper/models/game.dart';
+import 'package:score_keeper/models/theme.dart';
 import 'package:score_keeper/widgets/game_score_player_list.dart';
 import 'package:score_keeper/models/player.dart';
 
@@ -27,18 +29,21 @@ void main() {
         game: Game(players: new List<Player>()),
       ),
     ));
-    expect(find.byType( GameScorePlayerList), findsOneWidget);
+    expect(find.byType(GameScorePlayerList), findsOneWidget);
     expect(find.text('p1'), findsNothing);
   });
 
   testWidgets('List is created with one player', (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: GameScorePlayerList(
-        game: game,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: GameScorePlayerList(
+          game: game,
+        ),
       ),
     ));
-    expect(find.byType( GameScorePlayerList), findsOneWidget);
+    expect(find.byType(GameScorePlayerList), findsOneWidget);
     expect(find.text('p1'), findsOneWidget); // name
     expect(find.text('0'), findsOneWidget); // score
     expect(find.text('p2'), findsNothing);
@@ -48,9 +53,12 @@ void main() {
   testWidgets('Increment the players score is reflected on the app',
       (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: GameScorePlayerList(
-        game: game,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: GameScorePlayerList(
+          game: game,
+        ),
       ),
     ));
     await tester.tap(find.byKey(Key('p1-increment-score')));
@@ -63,9 +71,12 @@ void main() {
   testWidgets('Decrementing the players score is reflected on the app',
       (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: GameScorePlayerList(
-        game: game,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: GameScorePlayerList(
+          game: game,
+        ),
       ),
     ));
     await tester.tap(find.byKey(Key('p1-decrement-score')));
@@ -79,9 +90,12 @@ void main() {
       (WidgetTester tester) async {
     setUp();
     game.addPlayer(Player(name: 'p2'));
-    await tester.pumpWidget(MaterialApp(
-      home: GameScorePlayerList(
-        game: new Game(players: players),
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: GameScorePlayerList(
+          game: new Game(players: players),
+        ),
       ),
     ));
     await tester.tap(find.byKey(Key('p1-increment-score')));
@@ -94,9 +108,12 @@ void main() {
   testWidgets('Taping edit score button brings up dialog to edit',
       (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: GameScorePlayerList(
-        game: new Game(players: players),
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: GameScorePlayerList(
+          game: new Game(players: players),
+        ),
       ),
     ));
     await tester.tap(find.byKey(Key('p1-edit-score')));
@@ -113,39 +130,45 @@ void main() {
   testWidgets('Taping edit-score add-score button adds to score',
       (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: GameScorePlayerList(
-        game: new Game(players: players),
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: GameScorePlayerList(
+          game: new Game(players: players),
+        ),
       ),
     ));
-    expect(find.text('0'), findsOneWidget); 
-    expect(find.text('11'), findsNothing); 
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('11'), findsNothing);
     await tester.tap(find.byKey(Key('p1-edit-score')));
     await tester.pump();
     await tester.enterText(find.byKey(Key('text-edit-score')), '11');
     await tester.tap(find.byKey(Key('add-edit-score')));
     await tester.pump();
-    expect(find.text('11'), findsOneWidget); 
+    expect(find.text('11'), findsOneWidget);
     tearDown();
   });
 
-    testWidgets('Taping edit-score subtract-score button removes from score',
+  testWidgets('Taping edit-score subtract-score button removes from score',
       (WidgetTester tester) async {
     setUp();
     players[0].addScore(scoreToAdd: 100);
-    await tester.pumpWidget(MaterialApp(
-      home: GameScorePlayerList(
-        game: new Game(players: players),
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: GameScorePlayerList(
+          game: new Game(players: players),
+        ),
       ),
     ));
-    expect(find.text('100'), findsOneWidget); 
-    expect(find.text('2'), findsNothing); 
+    expect(find.text('100'), findsOneWidget);
+    expect(find.text('2'), findsNothing);
     await tester.tap(find.byKey(Key('p1-edit-score')));
     await tester.pump();
     await tester.enterText(find.byKey(Key('text-edit-score')), '98');
     await tester.tap(find.byKey(Key('subtract-edit-score')));
     await tester.pump();
-    expect(find.text('2'), findsOneWidget); 
+    expect(find.text('2'), findsOneWidget);
     tearDown();
   });
 }

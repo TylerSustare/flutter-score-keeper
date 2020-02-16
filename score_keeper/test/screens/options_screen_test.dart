@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import 'package:score_keeper/models/game.dart';
 import 'package:score_keeper/models/player.dart';
+import 'package:score_keeper/models/theme.dart';
 import 'package:score_keeper/screens/options_screen.dart';
 
 void main() {
@@ -22,9 +24,12 @@ void main() {
   }
 
   testWidgets('Options page renders', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(
-      home: OptionsScreen(
-        game: Game(players: new List<Player>()),
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: OptionsScreen(
+          game: Game(players: new List<Player>()),
+        ),
       ),
     ));
     expect(find.byType(OptionsScreen), findsOneWidget);
@@ -34,9 +39,13 @@ void main() {
   testWidgets('Options page shows initial increment and decrement values',
       (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: OptionsScreen(
-        game: game,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      // have to add a material app to this for a "context" with media query
+      child: MaterialApp(
+        home: OptionsScreen(
+          game: game,
+        ),
       ),
     ));
     expect(find.text('1'), findsNWidgets(2));
@@ -45,9 +54,13 @@ void main() {
 
   testWidgets('Options page shows change dialog', (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: OptionsScreen(
-        game: game,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        // have to add a material app to this for a "context" with media query
+        home: OptionsScreen(
+          game: game,
+        ),
       ),
     ));
     // incrementing score
@@ -74,9 +87,12 @@ void main() {
   testWidgets('Options page changes game increment and decrement values',
       (WidgetTester tester) async {
     setUp();
-    await tester.pumpWidget(MaterialApp(
-      home: OptionsScreen(
-        game: game,
+    await tester.pumpWidget(ChangeNotifierProvider(
+      create: (context) => GameTheme(),
+      child: MaterialApp(
+        home: OptionsScreen(
+          game: game,
+        ),
       ),
     ));
     // incrementing score

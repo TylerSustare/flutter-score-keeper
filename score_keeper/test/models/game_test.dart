@@ -1,6 +1,6 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:score_keeper/models/player.dart';
 import 'package:score_keeper/models/game.dart';
-import "package:test/test.dart";
 
 void main() {
   List<Player> players = new List<Player>();
@@ -32,7 +32,7 @@ void main() {
     tearDown();
   });
 
-  test('test is game over', (){
+  test('test is game over', () {
     setUp();
     Game game = new Game(players: players);
     expect(game.isGameOver(), false); // goal has not been set

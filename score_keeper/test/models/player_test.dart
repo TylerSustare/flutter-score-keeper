@@ -1,5 +1,5 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:score_keeper/models/player.dart';
-import "package:test/test.dart";
 
 void main() {
   test('Player default constructor', () {
@@ -38,7 +38,7 @@ void main() {
     p1.incrementScore(40);
     expect(p1.score, 40);
   });
- 
+
   test('Counter value should be decremented', () {
     final Player p1 = new Player(name: 'Steve', score: 100);
     p1.decrementScore();
@@ -48,7 +48,7 @@ void main() {
     expect(p1.score, 97);
   });
 
-    test('Counter value should be decremented, with optional amount', () {
+  test('Counter value should be decremented, with optional amount', () {
     final Player p1 = new Player(name: 'Steve', score: 100);
     p1.decrementScore(3);
     expect(p1.score, 97);
@@ -71,5 +71,4 @@ void main() {
     p1.resetScore();
     expect(p1.score, 0);
   });
-
 }

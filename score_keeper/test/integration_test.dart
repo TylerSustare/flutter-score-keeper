@@ -2,12 +2,21 @@
 // https://flutter.dev/docs/cookbook/testing/integration/introduction
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 import 'package:score_keeper/main.dart';
+import 'package:score_keeper/models/theme.dart';
 
 void main() {
   setUp(WidgetTester tester) async {
     // create app
-    await tester.pumpWidget(MaterialApp(home: MainApp()));
+    await tester.pumpWidget(
+      ChangeNotifierProvider(
+        create: (context) => GameTheme(),
+        child: MaterialApp(
+          home: MainApp(),
+        ),
+      ),
+    );
     expect(find.byType(MainApp), findsOneWidget);
     expect(find.text('p1'), findsNothing);
 
@@ -22,11 +31,11 @@ void main() {
     expect(find.text('p1'), findsOneWidget);
   }
 
-  testWidgets('Creates entrypoint for app', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: MainApp()));
-    expect(find.byType(MainApp), findsOneWidget);
-    expect(find.text('p1'), findsNothing);
-  });
+  // testWidgets('Creates entrypoint for app', (WidgetTester tester) async {
+  //   await tester.pumpWidget(MaterialApp(home: MainApp()));
+  //   expect(find.byType(MainApp), findsOneWidget);
+  //   expect(find.text('p1'), findsNothing);
+  // });
 
   testWidgets('Keeps score for one player with default inc/dec',
       (WidgetTester tester) async {
