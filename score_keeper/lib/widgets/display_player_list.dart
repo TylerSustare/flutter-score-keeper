@@ -23,14 +23,10 @@ class DisplayPlayerList extends StatelessWidget {
             // trailing: Icon(Icons.edit),
             title: Text(
               '${players[index].name}',
-              style: new TextStyle(
-                color: Colors.red,
-              ),
             ),
             leading: new FlatButton(
               child: new Icon(
                 Icons.delete,
-                color: Colors.grey[700],
               ),
               onPressed: () async {
                 await showDialog(

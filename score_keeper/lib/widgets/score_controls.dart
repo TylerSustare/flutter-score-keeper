@@ -21,7 +21,6 @@ class ScoreControls extends StatelessWidget {
         new FlatButton(
           child: new Icon(
             Icons.remove,
-            color: Colors.grey[700],
           ),
           onPressed: () {
             game.players[index].decrementScore(this.game.decrementValue);
@@ -32,7 +31,6 @@ class ScoreControls extends StatelessWidget {
         new FlatButton(
           child: new Icon(
             Icons.edit,
-            color: Colors.grey[700],
           ),
           onPressed: () async {
             String add = await _displayDialog(context);
@@ -46,7 +44,6 @@ class ScoreControls extends StatelessWidget {
         new FlatButton(
           child: new Icon(
             Icons.add,
-            color: Colors.grey[700],
           ),
           onPressed: () {
             game.players[index].incrementScore(this.game.incrementValue);

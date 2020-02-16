@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:score_keeper/models/player.dart';
+import 'package:score_keeper/models/theme.dart';
 
 // Create a Form widget.
 class AddPlayerForm extends StatefulWidget {
@@ -94,7 +96,7 @@ class AddPlayerFormState extends State<AddPlayerForm> {
                         Icons.person_add,
                         color: Colors.white,
                       ),
-                      color: Colors.blue,
+                      color: Provider.of<GameTheme>(context).color,
                       key: new Key('add-player-to-game'),
                     ),
                   ),

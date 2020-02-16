@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:score_keeper/models/game.dart';
 import 'package:score_keeper/widgets/change_inc_dec_value_dialog.dart';
+import 'package:score_keeper/models/theme.dart';
 
 class OptionsScreen extends StatefulWidget {
   OptionsScreen({@required this.game});
@@ -35,10 +37,25 @@ class _OptionsScreenState extends State<OptionsScreen> {
           children: <Widget>[
             Card(
               child: ListTile(
+                leading: Text(
+                  'Night Mode',
+                  style: TextStyle(fontSize: 30.0),
+                ),
+                trailing: Switch(
+                  onChanged: (value) =>
+                      Provider.of<GameTheme>(context, listen: false)
+                          .toggleDark(),
+                  value: Provider.of<GameTheme>(context).isDark,
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
                 leading: new RaisedButton(
+                  color: Provider.of<GameTheme>(context).color,
                   child: new Icon(
                     Icons.edit,
-                    color: Colors.grey[700],
+                    color: Colors.white,
                   ),
                   onPressed: () async {
                     String add = await _displayDialog(context);
@@ -68,9 +85,10 @@ class _OptionsScreenState extends State<OptionsScreen> {
             Card(
               child: ListTile(
                 leading: new RaisedButton(
+                  color: Provider.of<GameTheme>(context).color,
                   child: new Icon(
                     Icons.edit,
-                    color: Colors.grey[700],
+                    color: Colors.white,
                   ),
                   onPressed: () async {
                     String add = await _displayDialog(context);

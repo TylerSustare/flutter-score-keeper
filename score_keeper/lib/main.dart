@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:score_keeper/models/player.dart';
 import 'package:score_keeper/screens/players_screen.dart';
+import 'package:score_keeper/models/theme.dart';
 
 import 'models/game.dart';
 
-void main() => runApp(
-      MaterialApp(
-        title: 'Simple Score Keeper',
-        home: MainApp(),
-      ),
+void main() => runApp(Wrapper());
+
+class Wrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (context) => GameTheme(), child: App());
+  }
+}
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Simple Score Keeper',
+      theme: ThemeData(brightness: Provider.of<GameTheme>(context).brightness),
+      home: MainApp(),
     );
+  }
+}
 
 class MainApp extends StatefulWidget {
   @override
