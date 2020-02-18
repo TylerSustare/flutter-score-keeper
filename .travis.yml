@@ -10,7 +10,7 @@ addons:
       - libstdc++6
       - fonts-droid-fallback
 before_script:
-  - cd score_keeper
+  - cd score_keeper_2
   - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
 script:
