@@ -3,16 +3,41 @@ import 'package:provider/provider.dart';
 import 'package:score_keeper/models/player.dart';
 import 'package:score_keeper/screens/players_screen.dart';
 import 'package:score_keeper/models/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/game.dart';
 
 void main() => runApp(Wrapper());
 
+init() async {
+  var prefs = await SharedPreferences.getInstance();
+  var isDark = prefs.getBool('isDark') ?? true;
+  var isWakeLock = prefs.getBool('isWakeLock') ?? true;
+  return {"isDark": isDark, "isWakeLock": isWakeLock};
+}
+
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => GameTheme(), child: App());
+    return FutureBuilder(
+      future: init(),
+      builder: (context, snapshot) {
+        return ChangeNotifierProvider(
+          create: (context) => GameTheme(
+            isDark: snapshot.data["isDark"] as bool,
+            isWakeLock: snapshot.data["isWakeLock"],
+          ),
+          child: snapshot.data == null
+              ? MaterialApp(
+                  theme: ThemeData(brightness: Brightness.dark),
+                  home: Center(
+                    child: Icon(Icons.autorenew), // pseudo loading
+                  ),
+                )
+              : App(),
+        );
+      },
+    );
   }
 }
 
@@ -33,7 +58,9 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  final Game game = new Game(players: new List<Player>());
+  final Game game = new Game(
+    players: new List<Player>(),
+  );
 
   @override
   Widget build(BuildContext context) {

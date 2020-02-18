@@ -31,12 +31,6 @@ void main() {
     expect(find.text('p1'), findsOneWidget);
   }
 
-  // testWidgets('Creates entrypoint for app', (WidgetTester tester) async {
-  //   await tester.pumpWidget(MaterialApp(home: MainApp()));
-  //   expect(find.byType(MainApp), findsOneWidget);
-  //   expect(find.text('p1'), findsNothing);
-  // });
-
   testWidgets('Keeps score for one player with default inc/dec',
       (WidgetTester tester) async {
     await setUp(tester);

@@ -39,13 +39,28 @@ class _OptionsScreenState extends State<OptionsScreen> {
               child: ListTile(
                 leading: Text(
                   'Night Mode',
-                  style: TextStyle(fontSize: 30.0),
+                  style: TextStyle(fontSize: 24.0),
                 ),
                 trailing: Switch(
                   onChanged: (value) =>
                       Provider.of<GameTheme>(context, listen: false)
                           .toggleDark(),
                   value: Provider.of<GameTheme>(context).isDark,
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Text(
+                  'Keep Phone Awake',
+                  style: TextStyle(fontSize: 24.0),
+                ),
+                trailing: Switch(
+                  onChanged: (value) =>
+                      Provider.of<GameTheme>(context, listen: false)
+                          .toggleWakeLock(),
+                  value: Provider.of<GameTheme>(context).isWakeLock,
+                  // value: false,
                 ),
               ),
             ),
