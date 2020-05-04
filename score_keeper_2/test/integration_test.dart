@@ -31,8 +31,18 @@ void main() {
     expect(find.text('p1'), findsOneWidget);
   }
 
-  testWidgets('Keeps score for one player with default inc/dec',
-      (WidgetTester tester) async {
+  testWidgets('Deletes a player', (WidgetTester tester) async {
+    await setUp(tester);
+    await tester.tap(find.byIcon(Icons.delete));
+    await tester.pump();
+
+    expect(find.text("This can't be undone"), findsOneWidget);
+    await tester.tap(find.text('Yes'));
+    await tester.pump();
+    expect(find.text('p1'), findsNothing);
+  });
+
+  testWidgets('Keeps score for one player with default inc/dec', (WidgetTester tester) async {
     await setUp(tester);
     // switch screens
     expect(find.byKey(Key('keep-score')), findsOneWidget);
@@ -94,8 +104,7 @@ void main() {
     expect(find.text('99'), findsNothing);
   });
 
-  testWidgets('Keeps score for one player with custom inc/dec',
-      (WidgetTester tester) async {
+  testWidgets('Keeps score for one player with custom inc/dec', (WidgetTester tester) async {
     await setUp(tester);
     // navigate to options page
     await tester.tap(find.byKey(Key('nav-to-options-page')));
