@@ -10,10 +10,18 @@ import 'models/game.dart';
 void main() => runApp(Wrapper());
 
 init() async {
-  var prefs = await SharedPreferences.getInstance();
-  var isDark = prefs.getBool('isDark') ?? true;
-  var isWakeLock = prefs.getBool('isWakeLock') ?? true;
-  return {"isDark": isDark, "isWakeLock": isWakeLock};
+  var isDark = true;
+  var isWakeLock = true;
+  try {
+    var prefs = await SharedPreferences.getInstance().catchError(() {
+      // unable to reach shared preferences on startup
+    });
+    isDark = prefs.getBool('isDark') ?? true;
+    isWakeLock = prefs.getBool('isWakeLock') ?? true;
+  } catch (e) {
+    print('Unable to reach shared prefs. This is not a fatal error');
+  }
+  return {'isDark': isDark, "isWakeLock": isWakeLock};
 }
 
 class Wrapper extends StatelessWidget {

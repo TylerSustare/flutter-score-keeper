@@ -22,23 +22,29 @@ class GameTheme extends ChangeNotifier {
   }
 
   Future<void> toggleDark() async {
-    this.brightness =
-        this.brightness == Brightness.dark ? Brightness.light : Brightness.dark;
+    this.brightness = this.brightness == Brightness.dark ? Brightness.light : Brightness.dark;
     this.isDark = !this.isDark;
     this.color = this.isDark ? Colors.green : Colors.blue;
 
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isDark', this.isDark);
-
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isDark', this.isDark);
+    } catch (e) {
+      print('Unable to reach shared prefs. This is not a fatal error');
+    }
     notifyListeners();
   }
 
   Future<void> toggleWakeLock() async {
     this.isWakeLock = !this.isWakeLock;
 
-    await Wakelock.toggle(on: this.isWakeLock);
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isWakeLock', this.isWakeLock);
+    try {
+      await Wakelock.toggle(on: this.isWakeLock);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isWakeLock', this.isWakeLock);
+    } catch (e) {
+      print('Unable to reach shared prefs. This is not a fatal error');
+    }
 
     notifyListeners();
   }
